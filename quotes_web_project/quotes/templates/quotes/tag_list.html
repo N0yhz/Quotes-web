@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tags</title>
+</head>
+<body>
+    <h1>Tags</h1>
+    <ul>
+        {% for tag in tags %}
+            <li><a href="{% url 'quotes_by_tag' tags.id %}"> {{ tags.name }} </a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
