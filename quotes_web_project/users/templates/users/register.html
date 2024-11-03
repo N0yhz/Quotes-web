@@ -1,0 +1,22 @@
+{% extends "quotes/base.html" %}
+
+{% block content %}
+
+{% if form.errors %}
+    <div class="alert alert-danger">
+       There was an error with your form...
+    </div>
+{% endif %}
+    <h1>Register</h1>
+
+    <form action="{% url 'users:register' %}" method="POST">
+        
+        {% csrf_token %}
+
+        {{form}}
+    <br/>
+    <br/>
+        <input typoe="button" type="submit" value="Submit" class="btn btn-secondary">
+    </form>
+
+{% endblock %}

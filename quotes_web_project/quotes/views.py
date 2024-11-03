@@ -22,11 +22,11 @@ def main(request, page=1):
         quotes_on_page = paginator.page(paginator.num_pages)
     return render( request, 'quotes/index.html', context={'quotes': quotes_on_page})
 
-def tag_list(request):
-    tags = Tag.objects.all()
-    return render(request, 'quotes/tag_list.html', context={'tag': tags})
+# def tag_list(request):
+#     tags = Tag.objects.all()
+#     return render(request, 'quotes/tag_list.html', context={'tag': tags})
 
-def quotes_by_tag(request, tag_id):
-    tags = get_object_or_404(Tag, id =tag_id)
-    quotes = Quote.objects.filter(tag=tags)
-    return render(request, 'quotes/quotes_by_tag.html', context={'quote': quotes, 'tag': tags})
+# def quotes_by_tag(request, tag_id):
+#     tags = get_object_or_404(Tag, id =tag_id)
+#     quotes = Quote.objects.filter(tag=tags)
+#     return render(request, 'quotes/quotes_by_tag.html', context={'quote': quotes, 'tag': tags})
