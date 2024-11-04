@@ -16,12 +16,16 @@
  - password: admin
 
 **Other accounts**
+```
  - username: qwer
  - password: future_4567
-
+```
+```
  - username: tryout
  - password: Specialf0rEU
-
+```
+```
  - username: tryout2
  - password: PaulNguyen123
+```
 
