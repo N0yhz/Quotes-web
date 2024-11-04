@@ -1,0 +1,53 @@
+{% extends "quotes/base.html" %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'quotes/add_quotes.css' %}"/>
+        <style>
+            .selector-container{
+                display: flex;
+                justify-content: space-between;
+                align-self: start;
+            }
+            .selector-container > div{
+                margin-left: 0.5rem;
+                margin-right: 21rem;
+            }
+        </style>
+    </head>
+<form method="POST" action="{% url 'quotes:quote' %}">
+    {% csrf_token %}
+    <h1>Add Quote</h1>
+    <div class="add-container">
+        <div class="add-quote">
+            <strong> Quote: </strong>
+        </br>
+            {% render_field form.quote class+="form-control" %}
+            <span>{{ form.errors.quote }}</span>
+        </div>
+        </br>
+    </div>
+    <div class="selector-container">
+            <div id="auhtor">
+                <strong> Select author: </strong>
+                </br>
+                {% render_field form.author class+="form-control-sm" %}
+            </div>
+            <div id="tag">
+                <strong> Select Tags: </strong> 
+                {{form.tags}}
+            </div>
+        </div>
+    <div class="button-group">
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="reset" class="btn btn-secondary">Reset</button>
+    </div>
+</form>
+</html>
+{% endblock %}

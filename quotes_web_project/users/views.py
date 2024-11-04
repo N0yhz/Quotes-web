@@ -14,19 +14,26 @@ def register_user(request):
             username = form.cleaned_data['username']
             password = form.cleaned_data['password1']
             user = authenticate(username=username, password=password)
-            login(request,user)
-            messages.success(request, f"Account created for {username}!")
-        return redirect('quotes:root')
+
+            if user is not None:
+                login(request,user)
+                messages.success(request, f"Account created for {username}!")
+                return redirect('users:login')
+            else:
+                messages.error(request,"user authentication failed")
+        else:
+            messages.error(request, "There was a problem with your registration")
     else:
         form=UserCreationForm()
     return render(request, 'users/register.html', {
         'form': form,
     })
 
+@csrf_exempt
 def login_user(request):
     if request.method == 'POST':
-        username = request.POST["username"]
-        password = request.POST["password"]
+        username = request.POST.get('username')
+        password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
@@ -37,9 +44,8 @@ def login_user(request):
     else:
         return render(request, 'users/login.html', {} )
     
-@csrf_exempt
 @login_required
 def logout_user(request):
     logout(request)
     messages.success(request, ("You were logged out!!") )
-    return redirect('quotes:root')
+    return redirect('users:login')

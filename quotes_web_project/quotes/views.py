@@ -1,8 +1,9 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .models import Quote, Tag
-
+from django.contrib.auth.decorators import login_required
 from .utils import get_mongodb
+from .forms import AuthorForm, QuotesForm
+from .models import Author, Quote
 
 # Create your views here.
 
@@ -22,11 +23,48 @@ def main(request, page=1):
         quotes_on_page = paginator.page(paginator.num_pages)
     return render( request, 'quotes/index.html', context={'quotes': quotes_on_page})
 
-# def tag_list(request):
-#     tags = Tag.objects.all()
-#     return render(request, 'quotes/tag_list.html', context={'tag': tags})
+@login_required
+def quote(request):
+    author = Author.objects.all()
 
-# def quotes_by_tag(request, tag_id):
-#     tags = get_object_or_404(Tag, id =tag_id)
-#     quotes = Quote.objects.filter(tag=tags)
-#     return render(request, 'quotes/quotes_by_tag.html', context={'quote': quotes, 'tag': tags})
+    if request.method == 'POST':
+        form = QuotesForm(request.POST)
+        if form.is_valid():
+            new_quote = form.save()
+
+            choice_author = Author.objects.filter(name__in=request.POST.getlist('author'))
+            for tag in choice_author.iterator():
+                new_quote.author.add(tag)
+
+            return redirect(to='quotes:root')
+        else:
+            return render(request, 'quotes/quotes.html', {"auhtor": author, 'form': form})
+
+    return render(request, 'quotes/quotes.html', {"author": author, 'form': QuotesForm()})
+
+
+@login_required
+def author(request):
+    if request.method == 'POST':
+        form = AuthorForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(to='quotes:root')
+        else:
+            return render(request, 'quotes/author.html', {'form': form})
+
+    return render(request, 'quotes/author.html', {'form': AuthorForm()})
+
+def quotes_by_tag(request, tag):
+    quotes = Quote.objects.filter(tags__name= tag)
+    return render(request, 'quotes/quotes_by_tag.html', {'quotes': quotes, 'tag': tag})
+
+def add_quote(request): 
+    if request.method == 'POST': 
+        form = QuotesForm(request.POST) 
+        if form.is_valid():
+            form.save() 
+            return redirect(to='quotes:root') 
+    else: 
+        form = QuotesForm() 
+    return render(request, 'quotes/add_quote.html', {'form': form})

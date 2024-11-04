@@ -1,5 +1,6 @@
 {% extends 'quotes/base.html' %}
 {% load extract %}
+{% load quote_tags%}
 
     
 {% block content %}
@@ -17,12 +18,10 @@
                 <div class="tags">
                     Tags:
                     {% for tag in quote.tags %}
-
-                    <a class="tag" href="/tag/{{tag}}">{{tag}}</a>
+                    <a class="tag" href="{% url 'quotes:quotes_by_tag' tag=tag %}">{{tag}}</a>
                     {% endfor %}
                 </div>
             </div>
-
             {% endfor %}
             <nav>
                 <ul class="pager">
@@ -42,6 +41,10 @@
                     
                 </ul>
             </nav>
+        </div>
+
+        <div class="col-md-4 tags-box">
+            {% top_ten_tags %}
         </div>
     </div>
 

@@ -1,0 +1,48 @@
+<style>
+        /* static/quotes/add_quotes.css */
+    .top-tags {
+        background: #f8f8f8;
+        padding: 10px;
+        margin-left: 20px;
+        border: 1px solid #ddd;
+    }
+
+    .tag-list {
+        list-style-type: none;
+        padding: 0;
+        color: blue;
+    }
+
+    .tag-list li {
+        margin: 5px 0;
+        border-radius: 5px;
+        color: white;
+        background-color: #7CA3E6;
+    }
+
+    .tag-link {
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    .tag-link:hover {
+        color: #000000;
+    }
+
+    .tag-count {
+        font-size: 0.9em;
+        color: #ffffff;
+    }
+
+</style>
+<div class="top-tags">
+    <h3>Top Ten Tags</h3>
+    <ul class="tag-list">
+        {% for tag in tags %}
+            <li>
+                <a href="{% url 'quotes:quotes_by_tag' tag=tag.name %}" class="tag-link">{{ tag.name }}</a> 
+                <span class="tag-count">({{ tag.num_quotes }})</span>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
