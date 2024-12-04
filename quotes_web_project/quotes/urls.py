@@ -9,4 +9,5 @@ urlpatterns = [
     path('quotes/', views.quote, name='quote'),
     path('auhtor/', views.author, name='author'),
     path('tag/<str:tag>/', views.quotes_by_tag, name='quotes_by_tag'),
+    path('scrape/', views.scrape_view, name='scrape_data'),
 ]

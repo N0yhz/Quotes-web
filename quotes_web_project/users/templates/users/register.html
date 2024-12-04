@@ -12,12 +12,36 @@
     <form action="{% url 'users:register' %}" method="POST">
         
         {% csrf_token %}
+        <div>
+            <lable> Username:
+                {{ form.username }}
+            </lable>
+            <span>{{ form.errors.username }} </span>
+        </div>
+        <div>
+            <lable> Email:
+                {{ form.email }}
+            </lable>
+            <span>{{ form.errors.email }} </span>
+        </div>
+        <div>
+            <lable> Password:
+                {{ form.password1 }}
+            </lable>
+            <span>{{ form.errors.password1 }} </span>
+        </div>    
+         <div>
+            <lable> Password confirmation:
+                {{ form.password2 }}
+            </lable>
+            <span>{{ form.errors.password2 }} </span>
+        </div>    
 
-        {{ form.as_p }}
-        
     <br/>
-    <br/>
-        <input typoe="button" type="submit" value="Submit" class="btn btn-secondary">
+        <div class="grid">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="reset" class="btn btn-secondary">Reset</button>
+        </div>
     </form>
 
 {% endblock %}

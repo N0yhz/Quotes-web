@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from .utils import get_mongodb
 from .forms import AuthorForm, QuotesForm
 from .models import Author, Quote
-
+from django.core.management import call_command
 # Create your views here.
 
 def main(request, page=1):
@@ -68,3 +68,9 @@ def add_quote(request):
     else: 
         form = QuotesForm() 
     return render(request, 'quotes/add_quote.html', {'form': form})
+
+def scrape_view(request):
+    if request.method == 'POST':
+        call_command('scrape_quotes')
+        return redirect(to='quotes:root')
+    return render(request, 'quotes/base.html')
