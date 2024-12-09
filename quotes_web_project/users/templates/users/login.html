@@ -36,8 +36,14 @@
             <label for="exampleInputPassword1">Password</label>
             <input type="password" class="form-control" name="password" placeholder="Password">
         </div>
-        </br>  
-        <button type="submit" class="btn btn-primary">Submit</button>
+        </br> 
+        <div class="grid">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="reset" class="btn btn-secondary">Reset</button>
+        </div>
+        <div class="small text-center">
+        <a href="{% url 'users:password_reset' %}" class="text-center"><i>Forgot Password?</i></a>
+    </div> 
     </form>
 </body>
 </html>
