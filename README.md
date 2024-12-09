@@ -29,3 +29,7 @@
  - password: PaulNguyen123
 ```
 
+## Changes
+
+- Added password reset
+- Added profile + avatar
