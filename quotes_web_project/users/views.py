@@ -4,7 +4,6 @@ from django.contrib.messages.views import SuccessMessageMixin
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import PasswordResetView
 
 from django.views.decorators.csrf import csrf_exempt
@@ -25,26 +24,6 @@ def register_user(request):
             return render(request, 'users/register.html', context={'form': form})
         
     return render(request, 'users/register.html', context={'form': RegisterForm()})
-    #     form = UserCreationForm(request.POST)
-    #     if form.is_valid():
-    #         form.save()
-    #         username = form.cleaned_data['username']
-    #         password = form.cleaned_data['password1']
-    #         user = authenticate(username=username, password=password)
-
-    #         if user is not None:
-    #             login(request,user)
-    #             messages.success(request, f"Account created for {username}!")
-    #             return redirect('users:login')
-    #         else:
-    #             messages.error(request,"user authentication failed")
-    #     else:
-    #         messages.error(request, "There was a problem with your registration")
-    # else:
-    #     form=UserCreationForm()
-    # return render(request, 'users/register.html', {
-    #     'form': form,
-    # })
 
 @csrf_exempt
 def login_user(request):
@@ -85,7 +64,7 @@ def profile(request):
 class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
     template_name = 'users/password_reset_form.html'
     email_template_name = 'users/password_reset_email.html'
-    html_email_template_name = 'users/password_reset_form.html'
+    html_email_template_name = 'users/password_reset_email.html'
     success_url = reverse_lazy('users:password_reset_done')
     success_message = "An message with password reset has been sent to %(email)s."
     subject_template_name = 'users/password_reset_subject.txt'
