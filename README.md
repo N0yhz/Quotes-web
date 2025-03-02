@@ -1,6 +1,3 @@
-# goit-pyweb-hw-10
-
-## Done
 
 - Recreation website
 - Conection to MongoDb database
